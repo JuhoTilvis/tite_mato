@@ -23,6 +23,14 @@ class SnakeGame(QGraphicsView):
         
         self.start_game()
 
+    def spawn_food(self):
+        while True:
+            x = random.randint(0, GRID_WIDTH - 1)
+            y = random.randint(0, GRID_HEIGHT - 1)
+            if (x, y) not in self.snake:
+                return x, y
+
+
     def keyPressEvent(self, event):
         key = event.key()
 
@@ -64,6 +72,8 @@ class SnakeGame(QGraphicsView):
         for segment in self.snake:
             x, y = segment
             self.scene().addRect(x * CELL_SIZE, y * CELL_SIZE, CELL_SIZE, CELL_SIZE, QPen(Qt.black), QBrush(Qt.black))
+            fx, fy = self.food
+            self.scene().addRect(fx * CELL_SIZE, fy * CELL_SIZE, CELL_SIZE, CELL_SIZE, QPen(Qt.black), QBrush(Qt.red))
 
     def start_game(self):
         self.direction = Qt.Key_Right
